@@ -10,7 +10,7 @@ void custom_perror(char *cmd)
 	char errMsg[150] = "./hsh: 1: ";
 	char *err;
 
-	switch(errno)
+	switch (errno)
 	{
 		case EACCES:
 			err = "Permission denied";

@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * custom_exit_perror - Handles errors to the exit command
+ * custom_perror_builtin - Handles errors to builtin commands
  * @cmd: Command
  * @arg: Argument
  * Return: void

@@ -30,6 +30,6 @@ char *which(char *cmd);
 void signal_handler(int sig);
 char *read_file(void);
 void custom_perror(char *errormsg);
-void custom_perror_builtin(char *cmd, char *arg);
+void custom_perror_inbuilt(char *cmd, char *arg);
 
 #endif /* SHELL_H */
