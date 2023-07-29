@@ -37,6 +37,6 @@ void signal_handler(int sig);
 char *read_file(void);
 void custom_perror(char *errormsg);
 void custom_perror_builtin(char *cmd, char *arg);
-void variable_replace(char ***av);
+int variable_replace(char ***av);
 
 #endif /* SHELL_H */
