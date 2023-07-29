@@ -1,6 +1,6 @@
 #include <string.h>
 #include "shell.h"
-
+#include "memtracker.h"
 /**
  * _setenv - Sets a new value for an environment variable
  * @var: Environment variable name
@@ -8,6 +8,9 @@
  * @overwrite: Integer flag to overwrite or not
  * Return: 1 on success, -1 on failure
  */
+int trackerSize = 0;
+char *memtracker[100] = {NULL};
+char **memtrackerH = NULL;
 int _setenv(char *var, char *value, int overwrite)
 {
 	int varLen = _strlen(var), valLen = _strlen(value), i, j;
@@ -27,6 +30,10 @@ int _setenv(char *var, char *value, int overwrite)
 				perror("hsh: _setenv: ");
 				return (-1);
 			}
+			/* Store allocated memory in tracker string */
+			memtracker[trackerSize] = environ[i];
+			trackerSize++;
+
 			_strcpy(environ[i], var);
 			_strcat(environ[i], "=");
 			_strcat(environ[i], value);
@@ -45,11 +52,10 @@ int _setenv(char *var, char *value, int overwrite)
 				perror("hsh: _setenv: ");
 				return (-1);
 			}
+			memtrackerH = environNew;
 			/* Copy old environment variables into new env array */
 			for (j = 0; environ[j] != NULL; j++)
-			{
 				environNew[j] = environ[j];
-			}
 			/* Construct new environment variable string */
 			newVar = malloc(sizeof(char) * envstrLen);
 			if (newVar == NULL)
@@ -57,6 +63,9 @@ int _setenv(char *var, char *value, int overwrite)
 				printf("shell: _setenv: Memory allocation error\n");
 				return (-1);
 			}
+			memtracker[trackerSize] = newVar;
+			trackerSize++;
+
 			_strcpy(newVar, var);
 			_strcat(newVar, "=");
 			_strcat(newVar, value);

@@ -1,5 +1,6 @@
 #include "shell.h"
 #include "main.h"
+#include "memtracker.h"
 
 char *cmdline = NULL;
 /**
@@ -357,5 +358,6 @@ int main(void)
 	linesize = 0;
 	if (executable)
 		free(executable);
+	free_tracked_memory();
 	return (status);
 }
