@@ -13,6 +13,8 @@
 #include "main.h"
 
 extern char **environ;
+extern int status;
+
 /* Prototypes for custom std library functions */
 int _strlen(const char *s);
 int _strcmp(char *s1, char *s2);
@@ -27,6 +29,7 @@ int _atoi(char *s);
 int linetoargs(char **cmdline, char ***av);
 void free_args(char ***av);char *_getenv(const char *name);
 int _printenv(void);
+char *_getenv(const char *name);
 int _setenv(char *var, char *value, int overwrite);
 int _unsetenv(char *var);
 char *which(char *cmd);
@@ -34,5 +37,6 @@ void signal_handler(int sig);
 char *read_file(void);
 void custom_perror(char *errormsg);
 void custom_perror_builtin(char *cmd, char *arg);
+void variable_replace(char ***av);
 
 #endif /* SHELL_H */

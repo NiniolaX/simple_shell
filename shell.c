@@ -3,6 +3,8 @@
 #include "memtracker.h"
 
 char *cmdline = NULL;
+int status = 0;
+
 /**
  * signal_handler - Handles the Ctrl+C signal
  * @sig: Signal
@@ -16,31 +18,6 @@ void signal_handler(int sig)
 		free(cmdline);
 		exit(EXIT_SUCCESS);
 	}
-}
-
-/**
- * _getenv - Gets the value of an environment variable
- * @name: Name of environment variable
- * Return: Pointer to the value of the environment variable
- */
-char *_getenv(const char *name)
-{
-	int i = 0, nameLen;
-
-	if (name == NULL)
-	{
-		perror("hsh: ");
-		return (NULL);
-	}
-	nameLen = _strlen(name);
-	while (environ[i] != NULL)
-	{
-		if (_strncmp(name, environ[i], nameLen) == 0)
-			return (environ[i] + nameLen + 1);
-		i++;
-	}
-	/* Environment variable not found */
-	return (NULL);
 }
 
 /**
@@ -121,7 +98,7 @@ char *which(char *cmd)
  */
 int main(void)
 {
-	int ac, readline, status = 0;
+	int ac, readline;
 	char **av = NULL;
 	char *executable = NULL, *oldpwd = NULL, *newpwd = NULL;
 	char *hash;
@@ -180,6 +157,8 @@ int main(void)
 			cmdline = NULL;
 			continue;
 		}
+		/* Check for variable replacement */
+		variable_replace(&av);
 		/* Check if command is exit */
 		if (_strcmp(av[0], exitstr) == 0)
 		{
