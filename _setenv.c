@@ -1,6 +1,11 @@
 #include <string.h>
 #include "shell.h"
 #include "memtracker.h"
+
+int trackerSize = 0;
+char *memtracker[100] = {NULL};
+char **memtrackerH = NULL;
+
 /**
  * _setenv - Sets a new value for an environment variable
  * @var: Environment variable name
@@ -8,9 +13,7 @@
  * @overwrite: Integer flag to overwrite or not
  * Return: 1 on success, -1 on failure
  */
-int trackerSize = 0;
-char *memtracker[100] = {NULL};
-char **memtrackerH = NULL;
+
 int _setenv(char *var, char *value, int overwrite)
 {
 	int varLen = _strlen(var), valLen = _strlen(value), i, j;

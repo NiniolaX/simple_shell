@@ -106,7 +106,7 @@ alias_s *add_alias(char *aliasStr)
 void alias_handler(char **av)
 {
 	int i;
-	
+
 	/* If alias has no arguments */
 	if (av[1] == NULL)
 	{
