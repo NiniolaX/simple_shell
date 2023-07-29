@@ -32,12 +32,13 @@ char *_getenv(const char *name)
 		return (NULL);
 	}
 	nameLen = _strlen(name);
-	while (environ[i])
+	while (environ[i] != NULL)
 	{
 		if (_strncmp(name, environ[i], nameLen) == 0)
 			return (environ[i] + nameLen + 1);
 		i++;
 	}
+	/* Environment variable not found */
 	return (NULL);
 }
 
@@ -121,7 +122,7 @@ int main(void)
 {
 	int ac, readline, status = 0;
 	char **av = NULL;
-	char *executable = NULL;
+	char *executable = NULL, *oldpwd = NULL, *newpwd = NULL;
 	char exitstr[] = "exit", envstr[] = "env";
 	size_t linesize = 0;
 	pid_t pid;
@@ -220,27 +221,58 @@ int main(void)
 		{
 			if (av[1] == NULL)
 			{
-				if (_getenv("HOME") != NULL)
-					chdir(_getenv("HOME"));
-				else
+				if (_getenv("HOME") == NULL)
+				{
 					_printf("%s\n", _getenv("PWD"));
+				}
+				else
+				{
+					oldpwd = _strdup(_getenv("PWD"));
+					if (_getenv("HOME") != NULL)
+						chdir(_getenv("HOME"));
+				}
 			}
 			else if (_strcmp(av[1], "-") == 0)
 			{
 				if (_getenv("OLDPWD") != NULL)
+				{
+					oldpwd = _strdup(_getenv("PWD"));
 					chdir(_getenv("OLDPWD"));
+				}
 				else
 					_printf("%s\n", _getenv("PWD"));
 			}
 			else if (av[1])
 			{
 				if (stat(av[1], &dirStat) == 0)
+				{
+					oldpwd = _strdup(_getenv("PWD"));
 					chdir(av[1]);
+				}
 				else
 				{
 					custom_perror_builtin("cd", av[1]);
 					status = 2;
 				}
+			}
+			newpwd = getcwd(NULL, 0);
+			if (newpwd == NULL)
+			{
+				if (oldpwd != NULL)
+					free(oldpwd);
+				oldpwd = NULL;
+			}
+			else
+			{
+				if (oldpwd != NULL)
+				{
+					_setenv("OLDPWD", oldpwd, 1);
+					free(oldpwd);
+					oldpwd = NULL;
+				}
+				_setenv("PWD", newpwd, 1);
+				free(newpwd);
+				newpwd = NULL;
 			}
 			free(cmdline);
 			cmdline = NULL;
