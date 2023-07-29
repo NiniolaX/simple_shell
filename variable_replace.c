@@ -32,6 +32,11 @@ void variable_replace(char ***av)
 				free((*av)[i]);
 				(*av)[i] = _strdup(numStr);
 			}
+			else if (varName[0] == '\0')
+			{
+				free((*av)[i]);
+				(*av)[i] = _strdup("$");
+			}
 			else
 			{
 				varVal = _getenv(varName);
