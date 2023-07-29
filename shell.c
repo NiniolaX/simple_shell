@@ -220,9 +220,25 @@ int main(void)
 		if (_strcmp(av[0], "cd") == 0)
 		{
 			if (av[1] == NULL)
-				chdir(_getenv("HOME"));
+			{
+				if (_getenv("HOME") != NULL)
+					chdir(_getenv("HOME"));
+				else
+				{
+					custom_perror_builtin("cd", "HOME");
+					status = 127;
+				}
+			}
 			else if (_strcmp(av[1], "-") == 0)
-				chdir(_getenv("OLDPWD"));
+			{
+				if (_getenv("OLDPWD") != NULL)
+					chdir(_getenv("OLDPWD"));
+				else
+				{
+					custom_perror_builtin("cd", "OLDPWD");
+					status = 127;
+				}
+			}
 			else if (av[1])
 			{
 				if (stat(av[1], &dirStat) == 0)

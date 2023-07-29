@@ -21,7 +21,6 @@ int _setenv(char *var, char *value, int overwrite)
 		{
 			if (overwrite == 0)
 				return (0);
-			free(environ[i]);
 			environ[i] = malloc(sizeof(char) * envstrLen);
 			if (environ[i] == NULL)
 			{
