@@ -20,7 +20,7 @@ int _strncmp(const char *s1, const char *s2, int n);
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
 char *_strcat(char *dest, char *src);
-const char *_strchr(const char *s, char c);
+char *_strchr(char *s, char c);
 int _atoi(char *s);
 
 /* Prototypes for other custom functions */

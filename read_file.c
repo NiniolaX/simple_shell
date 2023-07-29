@@ -37,7 +37,7 @@ char *read_file(void)
 			cmdline[i] = c;
 		if (i + 1 == buffsize)
 		{
-			buffsize += buffsize;
+			buffsize *= buffsize;
 			cmdlinecp = malloc(sizeof(char) * buffsize);
 			if (cmdlinecp == NULL)
 			{

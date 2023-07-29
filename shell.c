@@ -124,6 +124,7 @@ int main(void)
 	int ac, readline, status = 0;
 	char **av = NULL;
 	char *executable = NULL, *oldpwd = NULL, *newpwd = NULL;
+	char *hash;
 	char exitstr[] = "exit", envstr[] = "env";
 	size_t linesize = 0;
 	pid_t pid;
@@ -166,6 +167,10 @@ int main(void)
 
 		if (cmdline == NULL)
 			break;
+		/* Handle comments */
+		hash = _strchr(cmdline, '#');
+		if (hash != NULL)
+			*hash = '\0';
 
 		/* Build av */
 		ac = linetoargs(&cmdline, &av);

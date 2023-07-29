@@ -7,7 +7,7 @@
  * Return: Pointer to first occurence of c or null
  */
 
-const char *_strchr(const char *s, char c)
+char *_strchr(char *s, char c)
 {
 	int i = 0;
 

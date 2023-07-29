@@ -9,7 +9,7 @@
  */
 int linetoargs(char **cmdline, char ***av)
 {
-	int i, ac = 0;
+	int i, ac = 0, quotes = 0;
 	char *tok = NULL, *tok2 = NULL, *cmdlinecp;
 	const char delim[] = " \n";
 
@@ -54,6 +54,18 @@ int linetoargs(char **cmdline, char ***av)
 		free(*av);
 		av = NULL;
 		return (-1);
+	}
+
+	/* Handle quotes */
+	for (i = 0; cmdlinecp[i] != '\0'; i++)
+	{
+		if (cmdlinecp[i] == '"')
+			quotes = 1;
+		if (quotes == 1 && cmdlinecp[i] == '#')
+		{
+			cmdlinecp[i] = '\0';
+			break;
+		}
 	}
 	tok2 = strtok(cmdlinecp, delim);
 	for (i  = 0; tok2 != NULL && i < ac; i++)
