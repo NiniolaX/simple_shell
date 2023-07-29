@@ -357,5 +357,6 @@ int main(void)
 	if (executable)
 		free(executable);
 	free_tracked_memory();
+	free_tracked_memory_alias();
 	return (status);
 }

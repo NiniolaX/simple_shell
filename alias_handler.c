@@ -1,9 +1,8 @@
 #include "shell.h"
 #include "main.h"
-#include "memtracker.h"
 
 alias_s *head;
-alias_s *aliasTracker = NULL;
+
 /**
  * print_alias - Prints an alias
  * @name: Name of alias
@@ -62,29 +61,23 @@ alias_s *add_alias(char *aliasStr)
 		{
 			free(p->value);
 			p->value = _strdup(value);
-			memtracker[trackerSize] = p->value;
-			trackerSize++;
 			free(aliasStrcp);
-			new = p;
-			return (new);
+			return (p);
 		}
 		p = p->next;
 	}
 
 	/* Allocate memory for new alias */
 	new = malloc(sizeof(alias_s));
-	if (new != NULL)
-		aliasTracker = new;
-	else
+	if (new == NULL)
+	{
+		free(aliasStrcp);
 		return (NULL);
+	}
 
 	/* Initialize new alias */
 	new->name = _strdup(name);
-	memtracker[trackerSize] = new->name;
-	trackerSize++;
 	new->value = _strdup(value);
-	memtracker[trackerSize] = new->value;
-	trackerSize++;
 	new->next = NULL;
 
 	free(aliasStrcp);

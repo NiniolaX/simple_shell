@@ -16,6 +16,4 @@ void free_tracked_memory(void)
 	}
 	if (memtrackerH != NULL)
 		free(memtrackerH);
-	if (aliasTracker != NULL)
-		free(aliasTracker);
 }

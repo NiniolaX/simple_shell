@@ -51,5 +51,6 @@ void custom_perror_builtin(char *cmd, char *arg);
 void variable_replace(char ***av);
 void alias_handler(char **av);
 char *find_alias(char *cmd);
+void free_tracked_memory_alias(void);
 
 #endif /* SHELL_H */
