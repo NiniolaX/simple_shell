@@ -12,6 +12,7 @@
 #include <signal.h>
 #include "main.h"
 
+extern char **environ;
 /* Prototypes for custom std library functions */
 int _strlen(const char *s);
 int _strcmp(char *s1, char *s2);
@@ -25,7 +26,9 @@ int _atoi(char *s);
 /* Prototypes for other custom functions */
 int linetoargs(char **cmdline, char ***av);
 void free_args(char ***av);char *_getenv(const char *name);
-int _printenv(char **environ);
+int _printenv(void);
+int _setenv(char *var, char *value, int overwrite);
+int _unsetenv(char *var);
 char *which(char *cmd);
 void signal_handler(int sig);
 char *read_file(void);

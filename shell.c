@@ -1,7 +1,6 @@
 #include "shell.h"
 #include "main.h"
 
-extern char **environ;
 char *cmdline = NULL;
 /**
  * signal_handler - Handles the Ctrl+C signal
@@ -192,11 +191,29 @@ int main(void)
 		/* Check if env */
 		if (_strcmp(av[0], envstr) == 0)
 		{
-			if (_printenv(environ) == -1)
+			if (_printenv() == -1)
 				status = 2;
 			free(cmdline);
 			cmdline = NULL;
 			free_args(&av);
+			continue;
+		}
+		if (_strcmp(av[0], "setenv") == 0)
+		{
+			if (av[1] != NULL && av[2] != NULL)
+				_setenv(av[1], av[2], 1);
+			free_args(&av);
+			free(cmdline);
+			cmdline = NULL;
+			continue;
+		}
+		if (_strcmp(av[0], "unsetenv") == 0)
+		{
+			if (av[1] != NULL)
+				_unsetenv(av[1]);
+			free_args(&av);
+			free(cmdline);
+			cmdline = NULL;
 			continue;
 		}
 		/* Check for cd */

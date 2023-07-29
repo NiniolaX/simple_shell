@@ -4,10 +4,9 @@
 
 /**
  * _printenv - Prints environment variables of a program
- * @environ: Pointer to array of environment variable strings
  * Return: 0 if success, -1 on fail
  */
-int _printenv(char **environ)
+int _printenv(void)
 {
 	int i = 0;
 
