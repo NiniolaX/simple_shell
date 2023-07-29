@@ -222,11 +222,7 @@ int main(void)
 		{
 			if (av[1] == NULL)
 			{
-				if (_getenv("HOME") == NULL)
-				{
-					_printf("%s\n", _getenv("PWD"));
-				}
-				else
+				if (_getenv("HOME") != NULL)
 				{
 					oldpwd = _strdup(_getenv("PWD"));
 					if (_getenv("HOME") != NULL)
@@ -239,6 +235,10 @@ int main(void)
 				{
 					oldpwd = _strdup(_getenv("PWD"));
 					chdir(_getenv("OLDPWD"));
+					newpwd = getcwd(NULL, 0);
+					_printf("%s\n", newpwd);
+					free(newpwd);
+					newpwd = NULL;
 				}
 				else
 					_printf("%s\n", _getenv("PWD"));
