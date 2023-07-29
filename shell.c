@@ -158,11 +158,7 @@ int main(void)
 			continue;
 		}
 		/* Check for variable replacement */
-		if (variable_replace(&av) == -1)
-		{
-			_putchar('\n');
-			break;
-		}
+		variable_replace(&av);
 		/* Check if command is exit */
 		if (_strcmp(av[0], exitstr) == 0)
 		{

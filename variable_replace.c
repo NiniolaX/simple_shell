@@ -6,7 +6,7 @@
  * @av: Pointer to array of shell arguments
  * Return: void
  */
-int variable_replace(char ***av)
+void variable_replace(char ***av)
 {
 	int i = 0;
 	char *varName, *varVal, numStr[20] = {0};
@@ -15,7 +15,7 @@ int variable_replace(char ***av)
 	while ((*av)[i] != NULL)
 	{
 		if (av == NULL || (*av)[i] == NULL)
-			return (0);
+			return;
 		if ((*av)[i][0] == '$')
 		{
 			varName = (*av)[i] + 1;
@@ -24,7 +24,6 @@ int variable_replace(char ***av)
 				_sprintf(numStr, "%d", status);
 				free((*av)[i]);
 				(*av)[i] = _strdup(numStr);
-				return (0);
 			}
 			else if (varName[0] == '$' && varName[1] == '\0')
 			{
@@ -32,7 +31,6 @@ int variable_replace(char ***av)
 				_sprintf(numStr, "%d", pid);
 				free((*av)[i]);
 				(*av)[i] = _strdup(numStr);
-				return (0);
 			}
 			else
 			{
@@ -43,10 +41,12 @@ int variable_replace(char ***av)
 					(*av)[i] = _strdup(varVal);
 				}
 				else
-					return (-1);
+				{
+					free((*av)[i]);
+					(*av)[i] = NULL;
+				}
 			}
 		}
 		i++;
 	}
-	return (0);
 }
