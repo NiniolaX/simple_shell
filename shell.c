@@ -219,18 +219,20 @@ int main(void)
 		/* Check for cd */
 		if (_strcmp(av[0], "cd") == 0)
 		{
-			if (av[1])
+			if (av[1] == NULL)
+				chdir(_getenv("HOME"));
+			else if (_strcmp(av[1], "-") == 0)
+				chdir(_getenv("OLDPWD"));
+			else if (av[1])
 			{
-				if (stat(av[1], &dirStat) == -1)
+				if (stat(av[1], &dirStat) == 0)
+					chdir(av[1]);
+				else
 				{
 					custom_perror_builtin("cd", av[1]);
 					status = 2;
 				}
-				else
-					chdir(av[1]);
 			}
-			else
-				chdir("/root");
 			free(cmdline);
 			cmdline = NULL;
 			free_args(&av);
