@@ -16,6 +16,7 @@ void signal_handler(int sig)
 	{
 		_putchar('\n');
 		free(cmdline);
+		free_tracked_memory();
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -31,6 +32,10 @@ char *which(char *cmd)
 	char *cmdpath = NULL, *dir, *path = _getenv("PATH"), *pathcpy = NULL, c = '/';
 	const char delim[] = ":\n";
 	int cmdpathLen;
+
+	/* Check for command in alias struct */
+	if (find_alias(cmd) != NULL)
+		cmd = find_alias(cmd);
 
 	/* Handle path command */
 	if ((_strchr(cmd, c)) != NULL)
@@ -159,6 +164,15 @@ int main(void)
 		}
 		/* Check for variable replacement */
 		variable_replace(&av);
+		/* Check for alias */
+		if (_strcmp(av[0], "alias") == 0)
+		{
+			alias_handler(av);
+			free(cmdline);
+			cmdline = NULL;
+			free_args(&av);
+			continue;
+		}
 		/* Check if command is exit */
 		if (_strcmp(av[0], exitstr) == 0)
 		{

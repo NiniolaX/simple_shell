@@ -14,7 +14,18 @@
 
 extern char **environ;
 extern int status;
-
+/**
+ * struct alias - Stores all aliases available in the shell
+ * @name: Alias name
+ * @value: Alias value
+ */
+typedef struct alias
+{
+	char *name;
+	char *value;
+	struct alias *next;
+} alias_s;
+extern alias_s *head;
 /* Prototypes for custom std library functions */
 int _strlen(const char *s);
 int _strcmp(char *s1, char *s2);
@@ -38,5 +49,7 @@ char *read_file(void);
 void custom_perror(char *errormsg);
 void custom_perror_builtin(char *cmd, char *arg);
 void variable_replace(char ***av);
+void alias_handler(char **av);
+char *find_alias(char *cmd);
 
 #endif /* SHELL_H */
