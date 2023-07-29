@@ -73,7 +73,6 @@ char *which(char *cmd)
 	pathcpy = _strdup(path);
 	if (pathcpy == NULL)
 	{
-		perror("hsh: ");
 		return (NULL);
 	}
 	dir = strtok(pathcpy, delim);
@@ -224,20 +223,14 @@ int main(void)
 				if (_getenv("HOME") != NULL)
 					chdir(_getenv("HOME"));
 				else
-				{
-					custom_perror_builtin("cd", "HOME");
-					status = 127;
-				}
+					_printf("%s\n", _getenv("PWD"));
 			}
 			else if (_strcmp(av[1], "-") == 0)
 			{
 				if (_getenv("OLDPWD") != NULL)
 					chdir(_getenv("OLDPWD"));
 				else
-				{
-					custom_perror_builtin("cd", "OLDPWD");
-					status = 127;
-				}
+					_printf("%s\n", _getenv("PWD"));
 			}
 			else if (av[1])
 			{
