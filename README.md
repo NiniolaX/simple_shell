@@ -1,54 +1,59 @@
-# Simple Shell - Readme
+# SIMPLE SHELL
 
-## Introduction
+## DESCRIPTION
 
-This shell is a simple command-line interpreter that provides a basic command execution environment. It allows you to interact with your operating system, execute commands, and perform various operations.
+- This is a simple command-line interpreter that provides a basic command execution environment.
+- It allows you to interact with your operating system, execute commands, and perform various operations.
 
-## Features
+## FEATURES
 
-- **Interactive Mode**: When you run the shell without any input redirection, it enters interactive mode. In this mode, the shell displays a prompt where you can enter commands directly. It reads and executes your commands interactively from the CLI.
+1. Handles command name (i.e. ls, pwd, etc).
+2. Handles command PATH (i.e. /bin/ls, /bin/pwd, etc).
+3. Handles commands with arguments (i.e. cd -, /bin/ls -la).
+4. Handles the 'exit' builtin that exits the shell.
+5. Handles the Ctrl+C and Ctrl+D signals.
+6. Handles the 'env' builtin that prints the current environment.
+7. Handles arguments to the 'exit' builtin (i.e. exit 98).
+8. Handles 'setenv' and 'unsetenv' builtin to modify current environment.
+9. Handles 'cd' builtin to change directory.
+10. Handles 'alias' builtin.
+11. Handles variable replacement wiith '$'.
+12. Handles comments with '#'.
+13. Works in interactive and non-interactive mode.
+14. Handles errors gracefully.
 
-- **Non-Interactive Mode**: When you run the shell with input redirected from a file or a script, it enters non-interactive mode. In this mode, the shell reads and executes commands from the input file without displaying a prompt. It is useful for running commands from a script file or automating tasks.
+## HOW TO USE
 
-- **Command Execution**: The shell supports executing basic system commands, such as `ls`, `pwd`, `cd`, `echo`, and more.
+1. **Compile the source files**:
 
-- **Exit**: To exit the shell, simply type `exit` and press Enter.
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 \*.c -o hsh
 
-## How to Use
+2. **Run the shell program**:
 
-### Compilation
+This shell can be used in either interactive and non-interactive mode.
 
-Use a C compiler to compile the shell program.
+- *Interactive Mode*: To run commands from the CLI.
 
-```bash
-gcc simple_shell.c -o shell
+your_cli:# ./hsh
+$ ls
+add                Author.md         free_args.c   main.h             _printenv.c  README.md        shell.h     _strcmp.c  _strncmp.c   variable_replace.c
+alias_handler.c    custom_perror2.c  _getenv.c     memtrackeralias.c  printf.c     runchecker.bash  _sprintf.c  _strcpy.c  test_ls_2
+allowed_functions  custom_perror.c   hsh           memtracker.c       _putchar.c   _setenv.c        _strcat.c   _strdup.c  TEST_SUITE
+_atoi.c            find_alias.c      linetoargs.c  memtracker.h       read_file.c  shell.c          _strchr.c   _strlen.c  _unsetenv.c
+$ exit
+your_cli:# echo "ls" | ./hsh
 
+- *Non-Interactive Mode*: To run commands from a script.
 
-Running the Shell
-Interactive Mode: Run the compiled program without any input redirection.
+your_cli:# echo "ls" | ./hsh
+add                Author.md         free_args.c   main.h             _printenv.c  README.md        shell.h     _strcmp.c  _strncmp.c   variable_replace.c
+alias_handler.c    custom_perror2.c  _getenv.c     memtrackeralias.c  printf.c     runchecker.bash  _sprintf.c  _strcpy.c  test_ls_2
+allowed_functions  custom_perror.c   hsh           memtracker.c       _putchar.c   _setenv.c        _strcat.c   _strdup.c  TEST_SUITE
+_atoi.c            find_alias.c      linetoargs.c  memtracker.h       read_file.c  shell.c          _strchr.c   _strlen.c  _unsetenv.c
+your_cli:#
 
-```
-./shell
+## ADDITIONAL NOTES:
 
-The shell will display a prompt (cisfun$) where you can enter commands interactively.
-
-Non-Interactive Mode: Redirect input from a file or a script.
-
-```
-./shell < input_commands.txt
-
-The shell will read and execute commands from the input file.
-
-Commands
-Enter commands at the prompt cisfun$ in interactive mode or provide them in the input file in non-interactive mode.
-
-
-cisfun$ ls
-cisfun$ pwd
-cisfun$ echo Hello, world!
-cisfun$ exit
-
-Additional Notes
 This is a custom shell that isn't as complex as popular shells like bash, zsh, or csh. 
-It serves as a simple starting point for experimenting with shell development. 
+However, it serves as a simple starting point for experimenting with shell development. 
 Future enhancements may include adding more advanced features and increasing its functionality.
